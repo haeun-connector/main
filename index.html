@@ -14,12 +14,15 @@
         :root {
             --primary-color: #007BFF;
             --primary-hover: #0056b3;
+            --logo-color: #FF8C00; /* 로고 전용 오렌지 색상 */
             --bg-color: #FFFFFF;
             --text-color: #333333;
             --text-light: #666666;
             --section-bg-alt: #F8F9FA;
             --border-color: #E9ECEF;
             --header-height: 80px;
+            --success-color: #28a745;
+            --error-color: #dc3545;
         }
 
         /* 기본 초기화 */
@@ -85,12 +88,8 @@
             font-size: 1.8rem;
             font-weight: 700;
             letter-spacing: 2px;
-            color: var(--primary-color);
-        }
-        
-        .logo .lower {
-            text-transform: lowercase;
-            font-size: 1.5rem;
+            color: var(--logo-color);
+            text-transform: uppercase;
         }
 
         .nav-menu {
@@ -107,7 +106,6 @@
             color: var(--primary-color);
         }
 
-        /* 모바일 햄버거 메뉴 */
         .menu-toggle {
             display: none;
             cursor: pointer;
@@ -118,7 +116,7 @@
         .hero {
             position: relative;
             height: calc(100vh - var(--header-height));
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1580983546221-f813a3dd7cb1?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -131,6 +129,7 @@
             font-weight: 700;
             margin-bottom: 1rem;
             word-break: keep-all;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         /* 3. About Us */
@@ -198,16 +197,43 @@
             display: block;
         }
 
-        .product-area {
-            background-color: var(--section-bg-alt);
-            height: 300px;
-            display: flex;
+        .product-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
             align-items: center;
-            justify-content: center;
+            background: var(--section-bg-alt);
+            padding: 2rem;
+            border-radius: 12px;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
             border-radius: 8px;
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .product-info p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
             color: var(--text-light);
-            font-size: 1.2rem;
-            border: 2px dashed var(--border-color);
+        }
+
+        .product-info ul {
+            padding-left: 20px;
+        }
+
+        .product-info ul li {
+            list-style: disc;
+            margin-bottom: 0.5rem;
         }
 
         @keyframes fadeIn {
@@ -237,6 +263,24 @@
             position: relative;
             z-index: 2;
             border-top: 4px solid var(--primary-color);
+            transition: border-top-color 0.3s ease;
+        }
+
+        .process-card:hover {
+            border-top-color: var(--logo-color);
+        }
+
+        .process-card:hover .service-icon {
+            color: var(--logo-color);
+            transform: scale(1.1);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: color 0.3s ease, transform 0.3s ease;
         }
 
         .process-arrow {
@@ -245,12 +289,135 @@
             z-index: 1;
         }
 
-        .process-card h4 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
+        /* 6. Customers Section */
+        .customers {
+            background-color: var(--bg-color);
+            overflow: hidden;
+            position: relative;
         }
 
-        /* 6. Booking & Location */
+        .carousel-wrapper {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .carousel-container {
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            padding: 1rem;
+        }
+
+        .customer-card {
+            background: var(--section-bg-alt);
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            height: 100%;
+        }
+
+        .customer-img-box {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid var(--logo-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .customer-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .customer-name {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .customer-tag {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .customer-review {
+            font-size: 1.1rem;
+            color: var(--text-color);
+            font-style: italic;
+            line-height: 1.8;
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .carousel-btn:hover {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
+        }
+
+        .carousel-btn.prev { left: -70px; }
+        .carousel-btn.next { right: -70px; }
+
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 2.5rem;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary-color);
+            width: 30px;
+            border-radius: 10px;
+        }
+
+        /* 7. Booking & Location */
         .booking-location {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -278,6 +445,7 @@
             border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 1rem;
+            width: 100%;
         }
 
         .submit-btn {
@@ -289,21 +457,41 @@
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            position: relative;
         }
 
-        .submit-btn:hover {
+        .submit-btn:disabled {
+            background-color: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .submit-btn:hover:not(:disabled) {
             background-color: var(--primary-hover);
         }
 
-        .location-info h4 {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
+        /* 피드백 메시지 스타일 */
+        .form-status {
+            margin-top: 1rem;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+            font-weight: 500;
+            text-align: center;
         }
 
-        .location-info p {
-            margin-bottom: 1.5rem;
+        .form-status.success {
+            display: block;
+            background-color: #d4edda;
+            color: var(--success-color);
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-status.error {
+            display: block;
+            background-color: #f8d7da;
+            color: var(--error-color);
+            border: 1px solid #f5c6cb;
         }
 
         .map-container {
@@ -314,7 +502,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 7. Footer */
+        /* 8. Footer */
         footer {
             background-color: #222222;
             color: #FFFFFF;
@@ -322,12 +510,11 @@
             padding: 2rem 0;
         }
 
-        /* 반응형 (Media Queries) */
+        /* 반응형 */
         @media (max-width: 992px) {
             .hero h1 { font-size: 2.8rem; }
-            .process-container { flex-direction: column; gap: 2rem; }
-            .process-card { width: 100%; }
-            .process-arrow { transform: rotate(90deg); margin: 1rem 0; }
+            .carousel-btn.prev { left: -20px; }
+            .carousel-btn.next { right: -20px; }
             .booking-location { grid-template-columns: 1fr; }
         }
 
@@ -343,18 +530,10 @@
                 padding: 1rem 0;
                 box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             }
-            .nav-menu.active {
-                display: flex;
-            }
-            .nav-menu a {
-                padding: 10px 20px;
-                display: block;
-                text-align: center;
-            }
-            .menu-toggle {
-                display: block;
-            }
+            .nav-menu.active { display: flex; }
+            .menu-toggle { display: block; }
             .about-grid { grid-template-columns: 1fr; }
+            .carousel-btn { display: none; }
             .hero h1 { font-size: 2rem; }
         }
     </style>
@@ -365,7 +544,7 @@
     <header>
         <div class="container header-container">
             <div class="logo">
-                <a href="#">H<span class="lower">e</span>AUN</a>
+                <a href="#">HAEUN</a>
             </div>
             <div class="menu-toggle" id="mobile-menu">☰</div>
             <nav>
@@ -373,14 +552,15 @@
                     <li><a href="#about">About Us</a></li>
                     <li><a href="#products">Products</a></li>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#customers">Customers</a></li>
                     <li><a href="#booking">Booking</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- 2. Hero Section -->
     <main>
+        <!-- 2. Hero Section -->
         <section class="hero">
             <div class="container">
                 <h1>전문 커넥터 유통사<br>하은커넥터</h1>
@@ -420,18 +600,47 @@
                 </div>
 
                 <div id="ms-connector" class="tab-content active">
-                    <div class="product-area">
-                        [ ms connector 제품 이미지 및 설명 플레이스홀더 영역 ]
+                    <div class="product-display">
+                        <img src="https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&w=800&q=80" alt="Military Connector" class="product-image">
+                        <div class="product-info">
+                            <h3>MIL-Spec Connector</h3>
+                            <p>군용 규격(Military Standard)을 준수하는 고성능 원형 커넥터입니다. 극한의 온도, 진동, 충격 환경에서도 완벽한 신호 전달을 보장합니다.</p>
+                            <ul>
+                                <li>MIL-DTL-5015 / MIL-DTL-26482 표준 준수</li>
+                                <li>내부식성 알루미늄 합금 하우징</li>
+                                <li>항공, 방산, 선박 등 중공업 최적화</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
                 <div id="auto-connector" class="tab-content">
-                    <div class="product-area">
-                        [ 자동화 커넥터 제품 이미지 및 설명 플레이스홀더 영역 ]
+                    <div class="product-display">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Automation Sensor Connector" class="product-image">
+                        <div class="product-info">
+                            <h3>Smart Automation Solutions</h3>
+                            <p>스마트 팩토리 및 산업 자동화 설비에 필수적인 센서 및 액추에이터용 커넥터입니다. 고속 데이터 전송과 안정적인 전원 공급이 특징입니다.</p>
+                            <ul>
+                                <li>M12 / M8 / M5 표준 규격 보유</li>
+                                <li>실시간 통신(Ethernet/Profinet) 지원</li>
+                                <li>PLC 및 산업용 로봇 시스템 호환</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
+
                 <div id="waterproof-connector" class="tab-content">
-                    <div class="product-area">
-                        [ 방수 커넥터 제품 이미지 및 설명 플레이스홀더 영역 ]
+                    <div class="product-display">
+                        <img src="https://images.unsplash.com/photo-1591123720164-de1348028a82?auto=format&fit=crop&w=800&q=80" alt="Waterproof Industrial Connector" class="product-image">
+                        <div class="product-info">
+                            <h3>Waterproof & Harsh Environment</h3>
+                            <p>수분과 먼지로부터 내부 접점을 완벽하게 보호하는 방수/방진 솔루션입니다. 실외 설비나 수처리 시설 등 열악한 환경에서 탁월한 성능을 발휘합니다.</p>
+                            <ul>
+                                <li>IP67 / IP68 등급 보호 성능</li>
+                                <li>UV 내성 및 내화학성 소재 사용</li>
+                                <li>손쉬운 잠금 구조(Push-Pull/Bayonet)</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -443,55 +652,113 @@
                 <h2 class="section-title">Services</h2>
                 <div class="process-container">
                     <div class="process-card">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                        </div>
                         <h4>1. 초기 상담</h4>
-                        <p>고객의 요구사항과 적용 환경을 분석합니다.</p>
+                        <p>고객의 요구사항과 적용 환경을 정밀하게 분석합니다.</p>
                     </div>
                     <div class="process-arrow">➔</div>
                     <div class="process-card">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                        </div>
                         <h4>2. 제품 견적</h4>
-                        <p>가장 효율적이고 합리적인 단가의 제품을 선별하여 제안합니다.</p>
+                        <p>합리적인 단가와 최단 납기의 견적을 제안합니다.</p>
                     </div>
                     <div class="process-arrow">➔</div>
                     <div class="process-card">
+                        <div class="service-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                        </div>
                         <h4>3. 추천 및 공급</h4>
-                        <p>최적의 커넥터를 신속하고 정확하게 납품합니다.</p>
+                        <p>검증된 품질의 제품을 현장에 즉시 납품합니다.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 6. Booking & Location -->
+        <!-- 6. Customers Section -->
+        <section id="customers" class="customers">
+            <div class="container">
+                <h2 class="section-title">Success Stories</h2>
+                <div class="carousel-wrapper">
+                    <button class="carousel-btn prev" id="prevBtn" aria-label="이전 슬라이드">❮</button>
+                    <div class="carousel-container">
+                        <div class="carousel-track" id="carouselTrack">
+                            <div class="carousel-slide">
+                                <div class="customer-card">
+                                    <div class="customer-img-box">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=200&q=80" alt="50대 남성 고객">
+                                    </div>
+                                    <span class="customer-name">김태훈 대표 (50대)</span>
+                                    <span class="customer-tag">중공업 장비 제조업체</span>
+                                    <p class="customer-review">"30년 업력답게 까다로운 사양도 정확하게 맞춰주십니다. 납기 일정 준수와 정직한 가격 덕분에 오랜 기간 거래하고 있습니다."</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="customer-card">
+                                    <div class="customer-img-box">
+                                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80" alt="40대 남성 고객">
+                                    </div>
+                                    <span class="customer-name">이정호 팀장 (40대)</span>
+                                    <span class="customer-tag">스마트 팩토리 솔루션 개발</span>
+                                    <p class="customer-review">"초기 설계 단계에서 커넥터 선정에 어려움이 많았는데, 전문가 상담을 통해 최적의 규격을 추천받아 공정 효율이 개선되었습니다."</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <div class="customer-card">
+                                    <div class="customer-img-box">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" alt="20대 남성 고객">
+                                    </div>
+                                    <span class="customer-name">박민수 엔지니어 (20대)</span>
+                                    <span class="customer-tag">자동화 로봇 스타트업</span>
+                                    <p class="customer-review">"최신 규격의 커넥터 재고를 빠르게 확인할 수 있고 상담 대응이 매우 신속합니다. 합리적인 가격대에 소량 구매도 가능해 만족합니다."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn next" id="nextBtn" aria-label="다음 슬라이드">❯</button>
+                    <div class="carousel-dots" id="carouselDots"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Booking & Location -->
         <section id="booking" class="booking">
             <div class="container">
                 <h2 class="section-title">Booking & Location</h2>
                 <div class="booking-location">
-                    <!-- 예약 폼 -->
                     <div class="booking-form-wrap">
-                        <form class="booking-form" onsubmit="event.preventDefault(); alert('예약이 접수되었습니다.');">
+                        <form class="booking-form" id="bookingForm">
                             <div class="form-group">
                                 <label for="name">이름 (담당자명)</label>
-                                <input type="text" id="name" required placeholder="이름을 입력해주세요">
+                                <input type="text" id="name" name="name" required placeholder="이름을 입력해주세요">
                             </div>
                             <div class="form-group">
                                 <label for="phone">연락처</label>
-                                <input type="tel" id="phone" required placeholder="010-0000-0000">
+                                <input type="tel" id="phone" name="phone" required placeholder="010-0000-0000">
                             </div>
                             <div class="form-group">
-                                <label for="date">방문 일자</label>
-                                <input type="date" id="date" required>
+                                <label for="connector-type">필요한 커넥터 종류</label>
+                                <input type="text" id="connector-type" name="connectorType" placeholder="예: MS3102A 20-29P, M12 방수커넥터 등">
                             </div>
-                            <button type="submit" class="submit-btn">예약 신청하기</button>
+                            <div class="form-group">
+                                <label for="date">방문 희망 일자</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            <button type="submit" class="submit-btn" id="submitBtn">예약 신청하기</button>
+                            <div id="formStatus" class="form-status"></div>
                         </form>
                     </div>
 
-                    <!-- 위치 및 매장 정보 -->
                     <div class="location-wrap">
                         <div class="location-info">
                             <h4>매장 연락처</h4>
                             <p>02-2618-7425</p>
                             <h4>운영 시간</h4>
-                            <p>평일 오전 9:00 ~ 오후 6:00 (주말 및 공휴일 휴무)</p>
-                            <h4>오시는 길</h4>
+                            <p>평일 09:00 ~ 18:00 (주말 및 공휴일 휴무)</p>
+                            <h4>본사 위치</h4>
                             <p>서울시 구로구 경인로53길 15 중앙유통단지</p>
                         </div>
                         <div class="map-container">
@@ -510,16 +777,15 @@
         </section>
     </main>
 
-    <!-- 7. Footer -->
+    <!-- 8. Footer -->
     <footer>
         <div class="container">
             <p>Copyright 2026 하은커넥터. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- JavaScript 기능 구현 -->
     <script>
-        // 1. 모바일 햄버거 메뉴 토글
+        // 공통: 모바일 메뉴 토글
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
 
@@ -527,31 +793,128 @@
             navMenu.classList.toggle('active');
         });
 
-        // 2. 탭(Tab) 전환 기능
+        // 공통: 제품 탭 전환
         function openTab(evt, tabId) {
-            // 모든 탭 콘텐츠 숨기기
             const tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
                 tabContents[i].classList.remove("active");
             }
-
-            // 모든 탭 버튼에서 active 클래스 제거
             const tabBtns = document.getElementsByClassName("tab-btn");
             for (let i = 0; i < tabBtns.length; i++) {
                 tabBtns[i].classList.remove("active");
             }
-
-            // 선택된 탭 콘텐츠 보이기 및 버튼 활성화
             document.getElementById(tabId).classList.add("active");
             evt.currentTarget.classList.add("active");
         }
 
-        // 3. 네비게이션 클릭 시 모바일 메뉴 자동 닫기
-        const navLinks = document.querySelectorAll('.nav-menu a');
-        navLinks.forEach(link => {
+        document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
                 navMenu.classList.remove('active');
             });
+        });
+
+        // 캐러셀 로직
+        const track = document.getElementById('carouselTrack');
+        const slides = Array.from(track.children);
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const dotsContainer = document.getElementById('carouselDots');
+        
+        let currentIndex = 0;
+
+        slides.forEach((_, idx) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (idx === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => moveToSlide(idx));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = Array.from(dotsContainer.children);
+
+        function updateCarousel() {
+            const slideWidth = track.offsetWidth;
+            track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+            
+            if(prevBtn && nextBtn) {
+                prevBtn.style.opacity = currentIndex === 0 ? '0.3' : '1';
+                prevBtn.style.pointerEvents = currentIndex === 0 ? 'none' : 'auto';
+                nextBtn.style.opacity = currentIndex === slides.length - 1 ? '0.3' : '1';
+                nextBtn.style.pointerEvents = currentIndex === slides.length - 1 ? 'none' : 'auto';
+            }
+
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentIndex);
+            });
+        }
+
+        function moveToSlide(index) {
+            currentIndex = index;
+            updateCarousel();
+        }
+
+        if(nextBtn) nextBtn.addEventListener('click', () => {
+            if (currentIndex < slides.length - 1) {
+                currentIndex++;
+                updateCarousel();
+            }
+        });
+
+        if(prevBtn) prevBtn.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                updateCarousel();
+            }
+        });
+
+        window.addEventListener('resize', updateCarousel);
+        updateCarousel();
+
+        // [신규 기능] 예약 폼 전송 로직 (Google Apps Script 연동)
+        const bookingForm = document.getElementById('bookingForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const formStatus = document.getElementById('formStatus');
+
+        // 주의: 아래 URL은 구글 앱스 스크립트 배포 후 얻게 되는 Web App URL을 넣어야 합니다.
+        // 현재는 시연을 위한 가상의 변수입니다.
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYh8f1oHroWKwZf_yRS2RMOwpB1Fn7uKuK30vXvXQZZ_RNC1roLRQnONkeWxCiq9E8/exec"; 
+
+        bookingForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // 버튼 비활성화 및 로딩 표시
+            submitBtn.disabled = true;
+            submitBtn.textContent = "전송 중...";
+            formStatus.className = "form-status";
+            formStatus.textContent = "";
+
+            const formData = new FormData(bookingForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                // 실제 배포 시에는 아래 fetch 주석을 해제하고 SCRIPT_URL을 실제 주소로 교체해야 합니다.
+                /*
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                */
+
+                // 시연용 가상 로직 (네트워크 통신 모사)
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                formStatus.className = "form-status success";
+                formStatus.textContent = "예약 신청이 성공적으로 완료되었습니다. 기입하신 연락처로 곧 연락드리겠습니다.";
+                bookingForm.reset();
+
+            } catch (error) {
+                formStatus.className = "form-status error";
+                formStatus.textContent = "서버 통신 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 매장으로 직접 전화 부탁드립니다.";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "예약 신청하기";
+            }
         });
     </script>
 </body>
