@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>하은커넥터 - 전문 커넥터 유통사</title>
+    <!-- 폰트 적용 (Noto Sans KR) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS 변수 선언 */
+        :root {
+            --primary-color: #007BFF;
+            --primary-hover: #0056b3;
+            --bg-color: #FFFFFF;
+            --text-color: #333333;
+            --text-light: #666666;
+            --section-bg-alt: #F8F9FA;
+            --border-color: #E9ECEF;
+            --header-height: 80px;
+        }
+
+        /* 기본 초기화 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            padding-top: var(--header-height);
+        }
+
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+        
+        /* 공통 레이아웃 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+        }
+
+        section {
+            padding: 5rem 0;
+        }
+
+        /* 1. Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary-color);
+        }
+        
+        .logo .lower {
+            text-transform: lowercase;
+            font-size: 1.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        /* 모바일 햄버거 메뉴 */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* 2. Hero Section */
+        .hero {
+            position: relative;
+            height: calc(100vh - var(--header-height));
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1580983546221-f813a3dd7cb1?auto=format&fit=crop&w=1920&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #FFFFFF;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            word-break: keep-all;
+        }
+
+        /* 3. About Us */
+        .about {
+            background-color: var(--section-bg-alt);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        .about-card {
+            background: var(--bg-color);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-card h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* 4. Products */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            background-color: var(--bg-color);
+            border: 2px solid var(--border-color);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .product-area {
+            background-color: var(--section-bg-alt);
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            border: 2px dashed var(--border-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 5. Services */
+        .services {
+            background-color: var(--section-bg-alt);
+        }
+
+        .process-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .process-card {
+            background: var(--bg-color);
+            width: 30%;
+            padding: 2.5rem;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 2;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .process-arrow {
+            font-size: 2rem;
+            color: var(--primary-color);
+            z-index: 1;
+        }
+
+        .process-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 6. Booking & Location */
+        .booking-location {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .booking-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 500;
+        }
+
+        .form-group input {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 4px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .location-info h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .location-info p {
+            margin-bottom: 1.5rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 7. Footer */
+        footer {
+            background-color: #222222;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        /* 반응형 (Media Queries) */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 2.8rem; }
+            .process-container { flex-direction: column; gap: 2rem; }
+            .process-card { width: 100%; }
+            .process-arrow { transform: rotate(90deg); margin: 1rem 0; }
+            .booking-location { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: var(--header-height);
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-color);
+                padding: 1rem 0;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            }
+            .nav-menu.active {
+                display: flex;
+            }
+            .nav-menu a {
+                padding: 10px 20px;
+                display: block;
+                text-align: center;
+            }
+            .menu-toggle {
+                display: block;
+            }
+            .about-grid { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <a href="#">H<span class="lower">e</span>AUN</a>
+            </div>
+            <div class="menu-toggle" id="mobile-menu">☰</div>
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#products">Products</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#booking">Booking</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>전문 커넥터 유통사<br>하은커넥터</h1>
+            </div>
+        </section>
+
+        <!-- 3. About Us -->
+        <section id="about" class="about">
+            <div class="container">
+                <h2 class="section-title">About Us</h2>
+                <div class="about-grid">
+                    <div class="about-card">
+                        <h3>30년 전문성</h3>
+                        <p>수십 년간 축적된 노하우를 바탕으로 산업 현장에 가장 적합하고 안전한 솔루션을 제안합니다.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>다양한 재고 보유</h3>
+                        <p>수많은 산업군의 요구사항을 충족하기 위해 폭넓고 다채로운 커넥터 라인업을 상시 구비하고 있습니다.</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>정직한 가격</h3>
+                        <p>고객과의 신뢰를 최우선 운영 철학으로 삼아, 거품 없는 합리적인 단가로 제품을 공급합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Products -->
+        <section id="products" class="products">
+            <div class="container">
+                <h2 class="section-title">Products</h2>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab(event, 'ms-connector')">ms connector</button>
+                    <button class="tab-btn" onclick="openTab(event, 'auto-connector')">자동화 커넥터</button>
+                    <button class="tab-btn" onclick="openTab(event, 'waterproof-connector')">방수 커넥터</button>
+                </div>
+
+                <div id="ms-connector" class="tab-content active">
+                    <div class="product-area">
+                        [ ms connector 제품 이미지 및 설명 플레이스홀더 영역 ]
+                    </div>
+                </div>
+                <div id="auto-connector" class="tab-content">
+                    <div class="product-area">
+                        [ 자동화 커넥터 제품 이미지 및 설명 플레이스홀더 영역 ]
+                    </div>
+                </div>
+                <div id="waterproof-connector" class="tab-content">
+                    <div class="product-area">
+                        [ 방수 커넥터 제품 이미지 및 설명 플레이스홀더 영역 ]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Services -->
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Services</h2>
+                <div class="process-container">
+                    <div class="process-card">
+                        <h4>1. 초기 상담</h4>
+                        <p>고객의 요구사항과 적용 환경을 분석합니다.</p>
+                    </div>
+                    <div class="process-arrow">➔</div>
+                    <div class="process-card">
+                        <h4>2. 제품 견적</h4>
+                        <p>가장 효율적이고 합리적인 단가의 제품을 선별하여 제안합니다.</p>
+                    </div>
+                    <div class="process-arrow">➔</div>
+                    <div class="process-card">
+                        <h4>3. 추천 및 공급</h4>
+                        <p>최적의 커넥터를 신속하고 정확하게 납품합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Booking & Location -->
+        <section id="booking" class="booking">
+            <div class="container">
+                <h2 class="section-title">Booking & Location</h2>
+                <div class="booking-location">
+                    <!-- 예약 폼 -->
+                    <div class="booking-form-wrap">
+                        <form class="booking-form" onsubmit="event.preventDefault(); alert('예약이 접수되었습니다.');">
+                            <div class="form-group">
+                                <label for="name">이름 (담당자명)</label>
+                                <input type="text" id="name" required placeholder="이름을 입력해주세요">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">연락처</label>
+                                <input type="tel" id="phone" required placeholder="010-0000-0000">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">방문 일자</label>
+                                <input type="date" id="date" required>
+                            </div>
+                            <button type="submit" class="submit-btn">예약 신청하기</button>
+                        </form>
+                    </div>
+
+                    <!-- 위치 및 매장 정보 -->
+                    <div class="location-wrap">
+                        <div class="location-info">
+                            <h4>매장 연락처</h4>
+                            <p>02-2618-7425</p>
+                            <h4>운영 시간</h4>
+                            <p>평일 오전 9:00 ~ 오후 6:00 (주말 및 공휴일 휴무)</p>
+                            <h4>오시는 길</h4>
+                            <p>서울시 구로구 경인로53길 15 중앙유통단지</p>
+                        </div>
+                        <div class="map-container">
+                            <iframe 
+                                src="https://maps.google.com/maps?q=서울시%20구로구%20경인로53길%2015%20중앙유통단지&t=&z=16&ie=UTF8&iwloc=&output=embed" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 7. Footer -->
+    <footer>
+        <div class="container">
+            <p>Copyright 2026 하은커넥터. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript 기능 구현 -->
+    <script>
+        // 1. 모바일 햄버거 메뉴 토글
+        const menuToggle = document.getElementById('mobile-menu');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // 2. 탭(Tab) 전환 기능
+        function openTab(evt, tabId) {
+            // 모든 탭 콘텐츠 숨기기
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            // 모든 탭 버튼에서 active 클래스 제거
+            const tabBtns = document.getElementsByClassName("tab-btn");
+            for (let i = 0; i < tabBtns.length; i++) {
+                tabBtns[i].classList.remove("active");
+            }
+
+            // 선택된 탭 콘텐츠 보이기 및 버튼 활성화
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // 3. 네비게이션 클릭 시 모바일 메뉴 자동 닫기
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
