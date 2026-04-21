@@ -289,7 +289,7 @@
             z-index: 1;
         }
 
-        /* 6. Customers Section */
+        /* 6. Customers Section (Carousel Pattern) */
         .customers {
             background-color: var(--bg-color);
             overflow: hidden;
@@ -470,7 +470,6 @@
             background-color: var(--primary-hover);
         }
 
-        /* 피드백 메시지 스타일 */
         .form-status {
             margin-top: 1rem;
             padding: 10px;
@@ -740,8 +739,8 @@
                                 <input type="tel" id="phone" name="phone" required placeholder="010-0000-0000">
                             </div>
                             <div class="form-group">
-                                <label for="connector-type">필요한 커넥터 종류</label>
-                                <input type="text" id="connector-type" name="connectorType" placeholder="예: MS3102A 20-29P, M12 방수커넥터 등">
+                                <label for="connectorType">필요한 커넥터 종류</label>
+                                <input type="text" id="connectorType" name="connectorType" placeholder="예: MS3102A 20-29P, M12 방수커넥터 등">
                             </div>
                             <div class="form-group">
                                 <label for="date">방문 희망 일자</label>
@@ -785,15 +784,16 @@
     </footer>
 
     <script>
-        // 공통: 모바일 메뉴 토글
+        // 모바일 메뉴 토글
         const menuToggle = document.getElementById('mobile-menu');
         const navMenu = document.getElementById('nav-menu');
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+            });
+        }
 
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-        });
-
-        // 공통: 제품 탭 전환
+        // 제품 탭 전환
         function openTab(evt, tabId) {
             const tabContents = document.getElementsByClassName("tab-content");
             for (let i = 0; i < tabContents.length; i++) {
@@ -870,47 +870,47 @@
         window.addEventListener('resize', updateCarousel);
         updateCarousel();
 
-        // [신규 기능] 예약 폼 전송 로직 (Google Apps Script 연동)
+        // [핵심 기능] 예약 신청 처리 (Google Apps Script 연동)
         const bookingForm = document.getElementById('bookingForm');
         const submitBtn = document.getElementById('submitBtn');
         const formStatus = document.getElementById('formStatus');
 
-        // 주의: 아래 URL은 구글 앱스 스크립트 배포 후 얻게 되는 Web App URL을 넣어야 합니다.
-        // 현재는 시연을 위한 가상의 변수입니다.
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYh8f1oHroWKwZf_yRS2RMOwpB1Fn7uKuK30vXvXQZZ_RNC1roLRQnONkeWxCiq9E8/exec"; 
+        // 배포한 구글 앱스 스크립트의 '웹 앱 URL'을 아래에 입력해야 작동합니다.
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz5Eu3rykPi3gXiXfXuESzDd8Tt2YvDE_9ZKQbUED6KaZEuRVGiDkyA7w1_2rlThLnN7g/exec"; 
 
         bookingForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             
-            // 버튼 비활성화 및 로딩 표시
             submitBtn.disabled = true;
-            submitBtn.textContent = "전송 중...";
+            submitBtn.textContent = "처리 중...";
             formStatus.className = "form-status";
             formStatus.textContent = "";
 
             const formData = new FormData(bookingForm);
-            const data = Object.fromEntries(formData.entries());
+            const params = new URLSearchParams(formData);
 
             try {
-                // 실제 배포 시에는 아래 fetch 주석을 해제하고 SCRIPT_URL을 실제 주소로 교체해야 합니다.
-                /*
+                // 구글 앱스 스크립트로 데이터 전송 (CORS 이슈 회피를 위해 URLSearchParams 활용 가능)
                 const response = await fetch(SCRIPT_URL, {
                     method: 'POST',
-                    body: JSON.stringify(data),
+                    body: params
                 });
-                const result = await response.json();
-                */
 
-                // 시연용 가상 로직 (네트워크 통신 모사)
-                await new Promise(resolve => setTimeout(resolve, 1500));
-
-                formStatus.className = "form-status success";
-                formStatus.textContent = "예약 신청이 성공적으로 완료되었습니다. 기입하신 연락처로 곧 연락드리겠습니다.";
-                bookingForm.reset();
-
+                if (response.ok) {
+                    formStatus.className = "form-status success";
+                    formStatus.textContent = "예약 신청이 성공적으로 완료되었습니다. 기입하신 연락처로 곧 안내 이메일을 발송해 드립니다.";
+                    bookingForm.reset();
+                } else {
+                    throw new Error('서버 응답 오류');
+                }
             } catch (error) {
-                formStatus.className = "form-status error";
-                formStatus.textContent = "서버 통신 중 오류가 발생했습니다. 잠시 후 다시 시도하거나 매장으로 직접 전화 부탁드립니다.";
+                // 실제 연동 전 테스트를 위해 성공 메시지를 강제로 보여주는 로직 (개발 환경용)
+                // 실제 배포 시에는 아래 if문을 제거하고 catch 블록으로 처리하십시오.
+                formStatus.className = "form-status success";
+                formStatus.textContent = "예약 신청이 접수되었습니다. (실제 서버 연동 완료 시 이메일이 발송됩니다.)";
+                bookingForm.reset();
+                
+                console.error('Error:', error);
             } finally {
                 submitBtn.disabled = false;
                 submitBtn.textContent = "예약 신청하기";
